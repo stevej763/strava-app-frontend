@@ -51,11 +51,13 @@ class App extends Component {
 
 
   loginToExistingSession = async () => {
+
     try {
       const response = await axios({
         method: "get",
         url: `/api/authentication/login/${this.state.sessionId}`,
       });
+      console.log(response.data)
       let user = response.data.user
       if (user.existing_user) {
         this.setState(
@@ -63,14 +65,13 @@ class App extends Component {
           athlete: user.athlete}
           );
         await this.getAthleteData();
-      }
+      } 
     } catch (error) {
-      console.log(error);
+      console.log("no user");
     }
   };
 
   loginToNewSession = async () => {
-    console.log("new session method ran")
     try {
       const response = await axios({
         method: "get",
@@ -80,7 +81,6 @@ class App extends Component {
     } catch (error) {
       console.log(error);
     }
-    console.log('New session method finished running')
   };
 
   getAthleteData = async () => {
@@ -93,7 +93,7 @@ class App extends Component {
       this.setState(
         { stats: response.data });
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -107,9 +107,9 @@ class App extends Component {
       dashboard = (
         <div>
           <div>
-            <h1 className="welcome">Hello, {this.state.athlete.firstname}!</h1>
+            <h1 className="d-flex justify-content-center welcome">Hello, {this.state.athlete.firstname}!</h1>
           </div>
-          <div className="row">
+          <div className="d-flex justify-content-evenly align-items-start row">
             <div className="col-sm-4">
               <CardElement 
               cardTitle="Distance"
@@ -139,7 +139,7 @@ class App extends Component {
       );
     } else {
       dashboard = (
-        <div className="strava-login">
+        <div className="d-flex justify-content-center">
           <LoginForm click={this.handleAuthenticationClick} />
         </div>
       );
@@ -147,7 +147,7 @@ class App extends Component {
 
     return (
       <div className="App container">
-        <h3>Strava Dashboard</h3>
+        
         {dashboard}
       </div>
     );

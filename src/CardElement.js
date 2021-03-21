@@ -3,7 +3,7 @@ import CountUp from 'react-countup';
 
 const cardElement = (props) => {
   return (
-    <div className="card">
+    <div className="stat-card">
       <div className="card-body">
         <h5 className="card-title"> {props.cardTitle} </h5>
         <h3 className="card-text"><CountUp
