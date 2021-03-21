@@ -69,6 +69,7 @@ class App extends Component {
           );
         await this.getAthleteStats();
         await this.getAthleteActivities();
+        this.setState({loading:false})
       } 
     } catch (error) {
       this.setState({existingUser: false})
@@ -123,7 +124,13 @@ class App extends Component {
 
   render() {
     let dashboard = null;
-    if (this.state.existingUser && this.state.activities !=null) {
+    if (this.state.athlete === null) {
+        dashboard = (
+          <div className="d-flex justify-content-center">
+            <LoginForm click={this.handleAuthenticationClick} />
+          </div>
+        );
+      } else if (this.state.existingUser && this.state.activities !=null) {
       dashboard = (
         <div>
           <div>
@@ -176,7 +183,7 @@ class App extends Component {
         <div className="d-flex justify-content-center align-items-center">
           <Loader
           className="dashboard-loader"
-          type="grid"
+          type="Grid"
           color="#fc4c02"
           height={200}
           width={200}
@@ -184,14 +191,7 @@ class App extends Component {
         />
         </div>
       )
-    } else {
-
-      dashboard = (
-        <div className="d-flex justify-content-center">
-          <LoginForm click={this.handleAuthenticationClick} />
-        </div>
-      );
-    }
+    } 
 
     return (
       <div className="App container">
