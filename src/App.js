@@ -9,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       existingUser: false,
       athlete: null,
       sessionId: localStorage.getItem("session_id"),
@@ -26,6 +27,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.setState({loading:true})
     console.log(this.state.sessionId);
     this.attemptToLogInToBackend();
   }
@@ -136,8 +138,9 @@ class App extends Component {
             </div>
           </div>
         </div>
-      );
+      )
     } else {
+
       dashboard = (
         <div className="d-flex justify-content-center">
           <LoginForm click={this.handleAuthenticationClick} />
