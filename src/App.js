@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import LoginForm from "./LoginForm";
 import CardElement from "./CardElement";
+import TimeCardElement from "./TimeCardElement";
 import Activities from "./Activities";
 import Loader from "react-loader-spinner";
 import axios from "axios";
@@ -116,12 +117,6 @@ class App extends Component {
     }
   }
 
-
-
-  getHoursAndMinutes = (time) => {
-    return time/3600
-  }
-
   render() {
     let dashboard = null;
     if (this.state.athlete === null) {
@@ -135,6 +130,7 @@ class App extends Component {
         <div>
           <div>
             <h1 className="d-flex justify-content-center welcome">Hello, {this.state.athlete.firstname}!</h1>
+            <h3 className="d-flex justify-content-center welcome">Your Stats this year:</h3>
           </div>
           <div className="d-flex justify-content-center align-items-center row">
             
@@ -149,15 +145,15 @@ class App extends Component {
             </div>
             <div className="col-lg-3 col-sm-12">
               <CardElement 
-              cardTitle="Number of Runs"
+              cardTitle="Run Count"
               cardData={this.state.stats.ytd_run_totals.count}
               decimalLength={0}
               />
             </div>
             <div className="col-lg-3 col-sm-12">
-              <CardElement 
+              <TimeCardElement 
               cardTitle="Time"
-              cardData={this.getHoursAndMinutes(this.state.stats.ytd_run_totals.moving_time)}
+              cardData={this.state.stats.ytd_run_totals.moving_time}
               decimalLength={2}
               units="Hours"
               />
