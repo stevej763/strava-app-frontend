@@ -12,7 +12,6 @@ const Activities = (props) => {
             <th>Type</th>
             <th>Average Heartrate (bpm)</th>
             <th>Average Pace (km)</th>
-            <th>Estimated Effort</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -23,9 +22,8 @@ const Activities = (props) => {
                 <td >{parseFloat(activity.distance/1000).toFixed(2)}</td>
                 <td>{parseFloat(activity.moving_time/60).toFixed(2)}</td>
                 <td>{activity.type}</td>
-                <td>{activity.average_heartrate}</td>
+                <td>{parseFloat(activity.average_heartrate).toFixed(0)}</td>
                 <td>{parseFloat((activity.moving_time/60) / (activity.distance/1000)).toFixed(2)}</td>
-                <td>{activity.suffer_score}</td>
                 <td>{new Date(activity.start_date).toLocaleDateString()}</td>
             </tr>;
           })}
