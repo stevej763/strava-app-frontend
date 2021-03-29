@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import LoginForm from "./LoginForm";
+import Logout from "./logout"
 import CardElement from "./CardElement";
 import TimeCardElement from "./TimeCardElement";
 import Activities from "./Activities";
@@ -26,6 +27,7 @@ class App extends Component {
       },
       activities: null
     };
+    this.baseState = this.state
   }
 
   componentDidMount() {
@@ -39,23 +41,29 @@ class App extends Component {
     await this.loginToNewSession();
   };
 
+  handleLogout = async () => {
+    localStorage.removeItem("session_id")
+    this.setState(this.baseState)
+    }
+
   attemptToLogInToBackend = () => {
     if (this.state.sessionId !== null) {
       this.loginToExistingSession();
     } else {
-      this.setSessionCookie(uuid());
+      let newSessionId = uuid()
+      this.setSessionCookie(newSessionId);
       this.setState({ sessionId: localStorage.getItem("session_id") });
     }
   };
 
-  setSessionCookie = (id) => {
-    localStorage.setItem("session_id", id);
+  setSessionCookie = (newSessionId) => {
+    localStorage.setItem("session_id", newSessionId);
+
   };
 
 
 
   loginToExistingSession = async () => {
-
     try {
       const response = await axios({
         method: "get",
@@ -172,6 +180,7 @@ class App extends Component {
         activityData={this.state.activities}
         />
           </div>
+          <Logout click={this.handleLogout}/>
         </div>
       )
     } else if (this.state.loading === true) {
