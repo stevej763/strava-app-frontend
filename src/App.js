@@ -69,7 +69,6 @@ class App extends Component {
         method: "get",
         url: `/api/authentication/login/${this.state.sessionId}`,
       });
-      console.log(response.data)
       let user = response.data.user
       if (user.existing_user) {
         this.setState(
@@ -103,7 +102,6 @@ class App extends Component {
         method: "get",
         url: `/api/athlete/stats/${this.state.sessionId}`,
       });
-      console.log(response.data);
       this.setState(
         { stats: response.data });
     } catch (error) {
@@ -117,7 +115,6 @@ class App extends Component {
         method: "get",
         url: `/api/athlete/activities/${this.state.sessionId}`,
       });
-      console.log(response.data);
       this.setState(
         { activities: response.data });
     } catch (error) {
@@ -138,7 +135,9 @@ class App extends Component {
         <div>
           <div>
             <h1 className="d-flex justify-content-center welcome">Hello, {this.state.athlete.firstname}!</h1>
-            <h3 className="d-flex justify-content-center welcome">Your Stats this year:</h3>
+            <div className="d-flex justify-content-center"> <img className="profile-picture" src={this.state.athlete.profile} alt="profile picture"/></div>
+            
+            <h3 className="d-flex justify-content-center welcome">Your running stats this year:</h3>
           </div>
           <div className="d-flex justify-content-center align-items-center row">
             
