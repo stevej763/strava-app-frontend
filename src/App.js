@@ -12,7 +12,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
       existingUser: false,
       athlete: null,
       sessionId: localStorage.getItem("session_id"),
@@ -31,13 +30,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({loading:true})
-    console.log(this.state.sessionId);
     this.attemptToLogInToBackend();
   }
 
   handleAuthenticationClick = async () => {
-    console.log("button clicked")
     await this.loginToNewSession();
   };
 
@@ -126,20 +122,18 @@ class App extends Component {
     let dashboard = null;
     if (this.state.athlete === null) {
         dashboard = (
-          <div className="d-flex justify-content-center">
             <LoginForm click={this.handleAuthenticationClick} />
-          </div>
         );
       } else if (this.state.existingUser && this.state.activities !=null) {
       dashboard = (
-        <div>
+        <div id="main-dashboard">
           <div>
             <h1 className="d-flex justify-content-center welcome">Hello, {this.state.athlete.firstname}!</h1>
-            <div className="d-flex justify-content-center"> <img className="profile-picture" src={this.state.athlete.profile} alt="profile picture"/></div>
+            <div> <img className="profile-picture" src={this.state.athlete.profile} alt="profile picture"/></div>
             
-            <h3 className="d-flex justify-content-center welcome">Your running stats this year:</h3>
+            <h3 className="welcome">Your running stats this year:</h3>
           </div>
-          <div className="d-flex justify-content-center align-items-center row">
+          <div className="align-items-center row">
             
             <div className="col-lg-3 col-sm-12">
               <CardElement 
@@ -174,7 +168,7 @@ class App extends Component {
               />
             </div>
           </div>
-          <div>
+          <div id="activity-table">
         <Activities
         activityData={this.state.activities}
         />
@@ -182,7 +176,7 @@ class App extends Component {
           <Logout click={this.handleLogout}/>
         </div>
       )
-    } else if (this.state.loading === true) {
+    } else {
       dashboard = (
         <div className="d-flex justify-content-center align-items-center">
           <Loader
@@ -191,14 +185,15 @@ class App extends Component {
           color="#fc4c02"
           height={200}
           width={200}
-          timeout={3000} //3 secs
+          timeout={3000}
         />
         </div>
       )
     } 
 
     return (
-      <div className="App container">
+      // <div className="container align-self-center h-100 ">
+      <div className={this.state.athlete ? "container" : "container align-self-center"}>
         {dashboard}
       </div>
     );
