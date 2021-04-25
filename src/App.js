@@ -192,7 +192,6 @@ class App extends Component {
     } 
 
     return (
-      // <div className="container align-self-center h-100 ">
       <div className={this.state.athlete ? "container" : "container align-self-center"}>
         {dashboard}
       </div>
